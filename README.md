@@ -3,6 +3,7 @@
 ## プロジェクトの始め方
 - 下記コマンド実行
 >docker-compose build
+
 >docker-compose up -d
 
 ## reactプロジェクト新規作成
