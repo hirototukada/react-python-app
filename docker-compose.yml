@@ -1,0 +1,34 @@
+version: '3'
+services:
+  frontend:
+    build: ./react
+    container_name: react
+    environment:
+      - NODE_ENV=development
+    volumes:
+    - ./src/frontend:/usr/src/app
+    command: sh -c "cd reactapp && npm start"
+    ports:
+    - "3000:3000"
+
+  backend:
+    build: "./python"
+    volumes:
+      - ./src/backend:/code
+    container_name: python
+    command: python3 manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:11.0-rc
+    container_name: mysql-db
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: develop
+      MYSQL_DATABASE: Todo
+      MYSQL_USER: develop
+      MYSQL_PASSWORD: develop
